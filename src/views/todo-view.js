@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, property } from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
@@ -12,20 +12,15 @@ const VisibilityFilters = {
 };
 
 class TodoView extends LitElement {
-  static get properties() {
-    return {
-      todos: { type: Array },
-      filter: { type: String },
-      task: { type: String }
-    };
-  }
+  
+  @property({ type: Array })
+  todos = [];
 
-  constructor() {
-    super();
-    this.todos = [];
-    this.filter = VisibilityFilters.SHOW_ALL;
-    this.task = '';
-  }
+  @property({ type: String })
+  filter = '';
+
+  @property({ type: String })
+  task = '';
 
   render() {
     return html`
