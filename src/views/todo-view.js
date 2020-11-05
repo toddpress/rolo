@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, property } from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
@@ -18,13 +18,22 @@ import {
 } from '../redux/actions.js';
 
 class TodoView extends connect(store)(LitElement) {
-  static get properties() {
-    return {
-      todos: { type: Array },
-      filter: { type: String },
-      task: { type: String }
-    };
-  }
+
+  // static get properties() {
+  //   return {
+  //     todos: { type: Array },
+  //     filter: { type: String },
+  //     task: { type: String }
+  //   };
+  // }
+  @property({ type: Array })
+  todos = [];
+
+  @property({ type: String })
+  filter = '';
+
+  @property({ type: String })
+  task = '';
 
   stateChanged(state) {
     this.todos = getVisibleTodosSelector(state);
