@@ -1,9 +1,10 @@
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, property, css} from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
+import './../components/rolo-card'
 import {
   VisibilityFilters,
   getVisibleTodosSelector
@@ -18,7 +19,6 @@ import {
 } from '../redux/actions.js';
 
 class TodoView extends connect(store)(LitElement) {
-
   // static get properties() {
   //   return {
   //     todos: { type: Array },
@@ -34,6 +34,9 @@ class TodoView extends connect(store)(LitElement) {
 
   @property({ type: String })
   task = '';
+
+  @property({ type: Boolean })
+  isFlipped = false;
 
   stateChanged(state) {
     this.todos = getVisibleTodosSelector(state);
@@ -63,55 +66,21 @@ class TodoView extends connect(store)(LitElement) {
           margin-top: calc(4 * var(--spacing));
         }
       </style>
-      <div class="input-layout" @keyup="${this.shortcutListener}">
-        <vaadin-text-field
-          placeholder="Task"
-          value="${this.task || ''}"
-          @change="${this.updateTask}"
-        ></vaadin-text-field>
-        <vaadin-button theme="primary" @click="${this.addTodo}">
-          Add Todo
-        </vaadin-button>
-      </div>
-      <div class="todos-list">
-        ${
-          this.todos.map(
-            todo => html`
-              <div class="todo-item">
-                <vaadin-checkbox
-                  ?checked="${todo.complete}"
-                  @change="${
-                    e => this.updateTodoStatus(todo, e.target.checked)
-                  }"
-                >
-                  ${todo.task}
-                </vaadin-checkbox>
-              </div>
-            `
-          )
-        }
-      </div>
-      <vaadin-radio-group
-        class="visibility-filters"
-        value="${this.filter}"
-        @value-changed="${this.filterChanged}"
-      >
-        ${
-          Object.values(VisibilityFilters).map(
-            filter => html`
-              <vaadin-radio-button value="${filter}"
-                >${filter}</vaadin-radio-button
-              >
-            `
-          )
-        }
-      </vaadin-radio-group>
-      <vaadin-button @click="${this.clearCompleted}">
-        Clear Completed
+
+      <rolo-card is-flipped="${this.isFlipped}">
+        <h1 slot="card-title">My Title</h1>
+        <span slot="card-front">CARD FRONT</span>
+        <span slot="card-back">CARD BACK</span>
+      </rolo-card>
+      <vaadin-button theme="primary" @click="${this.flip}">
+       Flip
       </vaadin-button>
+
     `;
   }
-
+  flip() {
+    this.isFlipped = !this.isFlipped;
+  }
   addTodo() {
     if (this.task) {
       store.dispatch(addTodo(this.task));
