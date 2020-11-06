@@ -1,5 +1,5 @@
-import { LitElement, html, property, css} from 'lit-element';
 import '@vaadin/vaadin-text-field';
+import { LitElement, html, property, css} from 'lit-element';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
@@ -66,16 +66,15 @@ class TodoView extends connect(store)(LitElement) {
           margin-top: calc(4 * var(--spacing));
         }
       </style>
-
-      <rolo-card is-flipped="${this.isFlipped}">
-        <h1 slot="card-title">My Title</h1>
-        <span slot="card-front">CARD FRONT</span>
-        <span slot="card-back">CARD BACK</span>
-      </rolo-card>
+      
+        <rolo-card is-flipped="${this.isFlipped}">
+          <div slot="card-front">CARD FRONT</div>
+          <div slot="card-back">CARD BACK</div>
+        </rolo-card>
+      
       <vaadin-button theme="primary" @click="${this.flip}">
-       Flip
+        Flip
       </vaadin-button>
-
     `;
   }
   flip() {

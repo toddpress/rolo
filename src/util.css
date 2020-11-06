@@ -1,0 +1,25 @@
+/** Aspect Ratio
+    Locks the elements height proprtionally to its width
+    @example - <d style="--aspect-ratio:3/5"></d>
+ */
+
+@supports (--custom:property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+    max-width: 100%;
+  }
+  [style*="--aspect-ratio"]::after {
+    content: "";
+    display: block;
+    padding-top: calc(100% / (var(--aspect-ratio)));
+  }  
+ [style*="--aspect-ratio"] > * {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }  
+}
