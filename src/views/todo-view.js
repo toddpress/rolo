@@ -66,20 +66,17 @@ class TodoView extends connect(store)(LitElement) {
           margin-top: calc(4 * var(--spacing));
         }
       </style>
-      
-        <rolo-card is-flipped="${this.isFlipped}">
+        <rolo-flip-card is-flipped="${this.isFlipped}">
           <div slot="card-front">CARD FRONT</div>
           <div slot="card-back">CARD BACK</div>
-        </rolo-card>
-      
-      <vaadin-button theme="primary" @click="${this.flip}">
+        </rolo-flip-card>
+
+      <vaadin-button theme="primary" @click="${() => this.isFlipped = !this.isFlipped}">
         Flip
       </vaadin-button>
     `;
   }
-  flip() {
-    this.isFlipped = !this.isFlipped;
-  }
+
   addTodo() {
     if (this.task) {
       store.dispatch(addTodo(this.task));

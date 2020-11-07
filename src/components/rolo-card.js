@@ -1,6 +1,6 @@
 import { LitElement, customElement, html, property, css } from 'lit-element';
 
-@customElement('rolo-card')
+@customElement('rolo-flip-card')
 class RoloCard extends LitElement {
   @property({
     type: Boolean,
@@ -11,7 +11,7 @@ class RoloCard extends LitElement {
 
   static get styles() {
     return css`
-      .rolo-card {
+      .rolo-flip-card {
         position: relative;
         background-color: transparent;
         perspective: 1000px;
@@ -22,29 +22,24 @@ class RoloCard extends LitElement {
         max-width: 100%;
       }
 
-      .rolo-card::after {
+      .rolo-flip-card::after {
         content: '';
         display: block;
         padding-top: calc(100% / (5/3)); /* padding hack to achieve 3x5 note card aspect ratio*/
       }
 
-      .rolo-card--flipped {
+      .rolo-flip-card--flipped {
         transform: rotateY(180deg);
       }
 
-      .rolo-card__back,
-      .rolo-card__front {
+      .rolo-flip-card__back,
+      .rolo-flip-card__front {
         position: absolute; top: 0; bottom: 0; left: 0; right: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-transform: uppercase;
-        letter-spacing: 0.01rem;
         -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
       }
 
-      .rolo-card__back {
+      .rolo-flip-card__back {
         transform: rotateY(180deg);
       }
     `;
@@ -52,17 +47,17 @@ class RoloCard extends LitElement {
 
   render() {
     return html`
-      <article
-        class="rolo-card ${this.isFlipped ? 'rolo-card--flipped' : ''}"
+      <div
+        class="rolo-flip-card ${this.isFlipped ? 'rolo-flip-card--flipped' : ''}"
         @click="${() => this.isFlipped = !this.isFlipped}"
       >
-        <section class="rolo-card__front">
+        <div class="rolo-flip-card__front">
           <slot name="card-front"></slot>
-        </section>
-        <section class="rolo-card__back">
+        </div>
+        <div class="rolo-flip-card__back">
           <slot name="card-back"></slot>
-        </section>
-      </article>
+        </div>
+      </div>
     `;
   }
 }
