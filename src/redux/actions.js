@@ -1,26 +1,15 @@
 import { nanoid } from 'nanoid';
 
-export const ADD_TODO = 'ADD_TODO';
-export const UPDATE_TODO_STATUS = 'UPDATE_TODO_STATUS';
+export const ADD_CARD = 'ADD_CARD';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
-export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
 
-export const addTodo = task => {
+export const addCard = card => {
     return {
-        type: ADD_TODO,
+        type: ADD_CARD,
         todo: {
             id: nanoid(),
-            task,
-            complete: false
+            card
         }
-    }
-}
-
-export const updateTodoStatus = (todo, complete) => {
-    return {
-        type: UPDATE_TODO_STATUS,
-        todo,
-        complete
     }
 }
 
@@ -28,11 +17,5 @@ export const updateFilter = filter => {
     return {
         type: UPDATE_FILTER,
         filter
-    }
-}
-
-export const clearCompleted = () => {
-    return {
-        type: CLEAR_COMPLETED
     }
 }
