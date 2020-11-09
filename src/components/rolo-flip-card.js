@@ -49,12 +49,13 @@ class RoloCard extends LitElement {
     return html`
       <div
         class="rolo-flip-card ${this.isFlipped ? 'rolo-flip-card--flipped' : ''}"
-        @click="${() => this.isFlipped = !this.isFlipped}"
+        @dblclick="${() => this.isFlipped = !this.isFlipped}"
+        part="card"
       >
-        <div class="rolo-flip-card__front">
+        <div class="rolo-flip-card__front" part="front">
           <slot name="card-front"></slot>
         </div>
-        <div class="rolo-flip-card__back">
+        <div class="rolo-flip-card__back" part="back">
           <slot name="card-back"></slot>
         </div>
       </div>

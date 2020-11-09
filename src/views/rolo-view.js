@@ -1,9 +1,12 @@
-import { LitElement, html, property } from 'lit-element';
+import { LitElement, html, property, css } from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
 import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
+import './../components/rolo-flip-card';
+import './../components/rolo-markdown';
+
 import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { VisibilityFilters, getVisibleCardsSelector } from '../redux/reducers.js';
@@ -23,19 +26,25 @@ class RoloView extends connect(store)(LitElement) {
     this.cards = state.cards;
     this.filter = state.filter;
   }
-
+  static get styles() {
+    return css`
+      .rolo-view__card-list rolo-flip-card::part(card) {
+        width: 300px;
+      }
+    `;
+  }
   render() {
     return html`
-      <style></style>
       <div>
+        <div class="rolo-view__card-list">
+          <rolo-flip-card is-flipped="${this.isTheOneCardFlipped}">
+            <div slot="card-front">CARD FRONT</div>
+            <div slot="card-back">CARD BACK</div>
+          </rolo-flip-card>
+        </div>
         <div>
           <button @click="${this.addCard}">Add Card +</button>
         </div>
-
-        <rolo-flip-card is-flipped="${this.isTheOneCardFlipped}">
-          <div slot="card-front">CARD FRONT</div>
-          <div slot="card-back">CARD BACK</div>
-        </rolo-flip-card>
 
         <vaadin-button
           theme="primary"
@@ -64,10 +73,6 @@ class RoloView extends connect(store)(LitElement) {
   addCard = () => {
     store.dispatch(addCard({ title: '', body: '' }));
   };
-
-  createRenderRoot() {
-    return this;
-  }
 }
 
 customElements.define('rolo-view', RoloView);
