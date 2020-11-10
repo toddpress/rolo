@@ -43,8 +43,7 @@ class RoloView extends connect(store)(LitElement) {
       const onCardInput = (id) => (side) => (event) => {
         console.log('[onCardInput] event fired on the %s-side of card (id %s)', id, side);
         console.info('[onCardInput] event: %o', event);
-        // dispatch update event for card
-        //? maybe the event handler should also accept a card or card id
+        // dispatch update action for card
       };
       return html` <div class="rolo-view__card-list">
         ${repeat( /* 1. Array, 2. Keying function, 3. Template */
