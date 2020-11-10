@@ -52,7 +52,7 @@ class RoloView extends connect(store)(LitElement) {
           (card, index) => {
             const { id, editable, front, back, flipped } = card;
             return html`
-              <rolo-flip-card is-flipped="${flipped}" >
+              <rolo-flip-card is-flipped="${flipped}">
                 <div slot="card-front">
                   <section 
                     ?contenteditable=${editable} 
