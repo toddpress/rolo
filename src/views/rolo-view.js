@@ -1,4 +1,4 @@
-import { LitElement, html, property, css } from 'lit-element';
+import { LitElement, html, property, css, customElement } from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
@@ -6,12 +6,16 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import './../components/rolo-flip-card';
 import './../components/rolo-markdown';
-
+import {repeat} from 'lit-html/directives/repeat';
 import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
-import { VisibilityFilters, getVisibleCardsSelector } from '../redux/reducers.js';
+import {
+  VisibilityFilters,
+  getVisibleCardsSelector,
+} from '../redux/reducers.js';
 import { addCard, updateFilter } from '../redux/actions.js';
 
+@customElement('rolo-view')
 class RoloView extends connect(store)(LitElement) {
   @property({ type: Array })
   cards = [];
@@ -34,17 +38,52 @@ class RoloView extends connect(store)(LitElement) {
     `;
   }
   render() {
+    // @TODO - refactor/copy-paste into dedicated rolo-card-list component
+    const _renderCardList = (cards) => {
+      const onCardInput = (id) => (side) => (event) => {
+        console.log('[onCardInput] event fired on the %s-side of card (id %s)', id, side);
+        console.info('[onCardInput] event: %o', event);
+        // dispatch update event for card
+        //? maybe the event handler should also accept a card or card id
+      };
+      return html` <div class="rolo-view__card-list">
+        ${repeat( /* 1. Array, 2. Keying function, 3. Template */
+          cards,
+          ({ id }) => id,
+          (card, index) => {
+            const { id, editable, front, back, flipped } = card;
+            return html`
+              <rolo-flip-card is-flipped="${flipped}" >
+                <div slot="card-front">
+                  <section 
+                    ?contenteditable=${editable} 
+                    @input=${onCardInput(id)('front')}
+                  >
+                    ${front}
+                  </section>
+                </div>
+                <div slot="card-back">
+                  <section 
+                    ?contenteditable=${editable} 
+                    @input=${onCardInput(id)('back')}
+                  >
+                    ${back}
+                  </section>
+                </div>
+              </rolo-flip-card>
+          </div>`;
+          }
+        )}
+      </div>`;
+    };
+
     return html`
       <div>
-        <div class="rolo-view__card-list">
-          <rolo-flip-card is-flipped="${this.isTheOneCardFlipped}">
-            <div slot="card-front">CARD FRONT</div>
-            <div slot="card-back">CARD BACK</div>
-          </rolo-flip-card>
-        </div>
         <div>
           <button @click="${this.addCard}">Add Card +</button>
         </div>
+
+        ${_renderCardList(this.cards)}
 
         <vaadin-button
           theme="primary"
@@ -75,4 +114,3 @@ class RoloView extends connect(store)(LitElement) {
   };
 }
 
-customElements.define('rolo-view', RoloView);

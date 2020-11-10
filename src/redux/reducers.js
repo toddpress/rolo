@@ -11,8 +11,8 @@ export const VisibilityFilters = {
 };
 
 const INITIAL_STATE = {
-    cards: [],
-    filter: VisibilityFilters.SHOW_ALL
+  cards: [{ id: '_1234$', flipped: false, editable: true, front: '', back: '' }],
+  filter: VisibilityFilters.SHOW_ALL,
 };
 
 const getCardsSelector = state => state.cards;
