@@ -41,7 +41,7 @@ class RoloView extends connect(store)(LitElement) {
     // @TODO - refactor/copy-paste into dedicated rolo-card-list component
     const _renderCardList = (cards) => {
       const onCardInput = (id) => (side) => (event) => {
-        console.log('[onCardInput] event fired on the %s-side of card (id %s)', id, side);
+        console.log('[onCardInput] event fired on the %s-side of card (id %s)', side, id);
         console.info('[onCardInput] event: %o', event);
         // dispatch update action for card
       };
