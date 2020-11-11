@@ -1,4 +1,3 @@
-import { LitElement, html, property, css, customElement } from 'lit-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-checkbox';
@@ -6,14 +5,17 @@ import '@vaadin/vaadin-radio-button/vaadin-radio-button';
 import '@vaadin/vaadin-radio-button/vaadin-radio-group';
 import './../components/rolo-flip-card';
 import './../components/rolo-markdown';
-import {repeat} from 'lit-html/directives/repeat';
-import { connect } from 'pwa-helpers';
-import { store } from '../redux/store.js';
+
+import { LitElement, css, customElement, html, property } from 'lit-element';
 import {
   VisibilityFilters,
   getVisibleCardsSelector,
 } from '../redux/reducers.js';
 import { addCard, updateFilter } from '../redux/actions.js';
+
+import { connect } from 'pwa-helpers';
+import {repeat} from 'lit-html/directives/repeat';
+import { store } from '../redux/store.js';
 
 @customElement('rolo-view')
 class RoloView extends connect(store)(LitElement) {

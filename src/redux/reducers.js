@@ -2,7 +2,9 @@ import {
     ADD_CARD,
     UPDATE_FILTER
 } from './actions';
+
 import { createSelector } from 'reselect';
+import { nanoid } from 'nanoid'
 
 export const VisibilityFilters = {
     SHOW_ALL: 'All',
@@ -11,7 +13,7 @@ export const VisibilityFilters = {
 };
 
 const INITIAL_STATE = {
-  cards: [{ id: '_1234$', flipped: false, editable: true, front: '', back: '' }],
+  cards: [{ id: nanoid() , flipped: false, editable: true, front: '', back: '' }],
   filter: VisibilityFilters.SHOW_ALL,
 };
 
