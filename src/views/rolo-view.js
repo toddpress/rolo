@@ -39,7 +39,6 @@ class RoloView extends connect(store)(LitElement) {
   }
 
   render() {
-    // @TODO - refactor/copy-paste into dedicated rolo-card-list component
     return html`
       <div>
         <div>
