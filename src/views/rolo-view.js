@@ -32,9 +32,6 @@ class RoloView extends connect(store)(LitElement) {
   }
   static get styles() {
     return css`
-      .rolo-view__card-list rolo-flip-card::part(card) {
-        width: 300px;
-      }
     `;
   }
 
