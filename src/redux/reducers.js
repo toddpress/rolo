@@ -1,5 +1,6 @@
 import {
     ADD_CARD,
+    UPDATE_CARD,
     UPDATE_FILTER
 } from './actions';
 
@@ -31,6 +32,21 @@ export const reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 cards: [...state.cards, action.card]
+            }
+        case UPDATE_CARD:
+            const { id, side, text } = action.payload;
+            const cards = state.cards.map((card) =>
+                card.id === id
+                    ? ({
+                        ...card,
+                        [side]: text
+                    })
+                    : card
+            );
+
+            return {
+                ...state,
+                cards
             }
         case UPDATE_FILTER:
             return {

@@ -1,4 +1,4 @@
-import { LitElement, customElement, html, property, css } from 'lit-element';
+import { LitElement, css, customElement, html, property } from 'lit-element';
 
 @customElement('rolo-flip-card')
 class RoloCard extends LitElement {
@@ -49,14 +49,13 @@ class RoloCard extends LitElement {
     return html`
       <div
         class="rolo-flip-card ${this.isFlipped ? 'rolo-flip-card--flipped' : ''}"
-        @dblclick="${() => this.isFlipped = !this.isFlipped}"
         part="card"
       >
         <div class="rolo-flip-card__front" part="front">
-          <slot name="card-front"></slot>
+          <slot name="front"></slot>
         </div>
         <div class="rolo-flip-card__back" part="back">
-          <slot name="card-back"></slot>
+          <slot name="back"></slot>
         </div>
       </div>
     `;

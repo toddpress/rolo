@@ -2,6 +2,19 @@ import { nanoid } from 'nanoid';
 
 export const ADD_CARD = 'ADD_CARD';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const UPDATE_CARD = 'UPDATE_CARD';
+
+
+export const updateCard = (id, side, text) => {
+    return {
+        type: UPDATE_CARD,
+        payload: {
+            id,
+            side,
+            text
+        }
+    }
+}
 
 export const addCard = card => {
     return {
