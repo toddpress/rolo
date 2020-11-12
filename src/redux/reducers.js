@@ -1,8 +1,11 @@
 import {
     ADD_CARD,
+    UPDATE_CARD,
     UPDATE_FILTER
 } from './actions';
+
 import { createSelector } from 'reselect';
+import { nanoid } from 'nanoid'
 
 export const VisibilityFilters = {
     SHOW_ALL: 'All',
@@ -11,8 +14,8 @@ export const VisibilityFilters = {
 };
 
 const INITIAL_STATE = {
-    cards: [],
-    filter: VisibilityFilters.SHOW_ALL
+  cards: [{ id: nanoid() , flipped: false, editable: true, front: '', back: '' }],
+  filter: VisibilityFilters.SHOW_ALL,
 };
 
 const getCardsSelector = state => state.cards;
@@ -29,6 +32,19 @@ export const reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 cards: [...state.cards, action.card]
+            }
+        case UPDATE_CARD:
+            const { card } = action.payload;
+            const index = state.cards.findIndex(c => c.id === card.id)
+            const cards = [
+                ...state.cards.slice(0, index),
+                card,
+                ...state.cards.slice(index + 1)
+            ];
+
+            return {
+                ...state,
+                cards
             }
         case UPDATE_FILTER:
             return {
