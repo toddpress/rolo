@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 export const ADD_CARD = 'ADD_CARD';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const UPDATE_CARD = 'UPDATE_CARD';
@@ -14,13 +12,10 @@ export const updateCard = (card) => {
     }
 }
 
-export const addCard = card => {
+export const addCard = () => {
     return {
         type: ADD_CARD,
-        todo: {
-            id: nanoid(),
-            card
-        }
+        payload: {}
     }
 }
 
