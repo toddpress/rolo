@@ -19,8 +19,10 @@ class RoloCard extends BaseComponent {
     `;
   }
   onCardInput = (side) => (event) => {
-    //@TODO - fix the duplication issue when inputting text the first time
-    const card = { ...this.card, [side]: event.target.dataset.value };
+    const card = {
+      ...this.card,
+      [side]: event.target.dataset.value
+    };
     this._dispatchEvent('card-update', card);
   }
   render() {
