@@ -5,13 +5,11 @@ export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const UPDATE_CARD = 'UPDATE_CARD';
 
 
-export const updateCard = (id, side, text) => {
+export const updateCard = (card) => {
     return {
         type: UPDATE_CARD,
         payload: {
-            id,
-            side,
-            text
+            card
         }
     }
 }

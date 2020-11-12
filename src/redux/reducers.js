@@ -34,15 +34,13 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 cards: [...state.cards, action.card]
             }
         case UPDATE_CARD:
-            const { id, side, text } = action.payload;
-            const cards = state.cards.map((card) =>
-                card.id === id
-                    ? ({
-                        ...card,
-                        [side]: text
-                    })
-                    : card
-            );
+            const { card } = action.payload;
+            const index = state.cards.findIndex(c => c.id === card.id)
+            const cards = [
+                ...state.cards.slice(0, index),
+                card,
+                ...state.cards.slice(index + 1)
+            ];
 
             return {
                 ...state,
