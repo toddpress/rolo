@@ -59,6 +59,6 @@ class RoloView extends connect(store)(LitElement) {
     store.dispatch(updateCard(card));
   }
   addCard = () => {
-    store.dispatch(addCard({ title: '', body: '' }));
+    store.dispatch(addCard());
   };
 }
