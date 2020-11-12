@@ -30,9 +30,18 @@ export const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_CARD:
             return {
-                ...state,
-                cards: [...state.cards, action.card]
-            }
+              ...state,
+              cards: [
+                ...state.cards,
+                {
+                  id: nanoid(),
+                  flipped: false,
+                  editable: true,
+                  front: '',
+                  back: '',
+                },
+              ],
+            };
         case UPDATE_CARD:
             const { card } = action.payload;
             const index = state.cards.findIndex(c => c.id === card.id)
