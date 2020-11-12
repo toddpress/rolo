@@ -32,13 +32,14 @@ class RoloCard extends BaseComponent {
               slot="front"
               ?contenteditable=${editable}
               data-value="${front}"
-              @input="${this.onCardInput('front')}">${front}</section>
+              @input="${this.onCardInput('front')}"
+            >${front}</section>
             <section
               slot="back"
               ?contenteditable=${editable}
               data-value="${back}"
               @input=${this.onCardInput('back')}
-              >${back}</section>
+            >${back}</section>
         </div>
       </base-flip-card>`;
   }
