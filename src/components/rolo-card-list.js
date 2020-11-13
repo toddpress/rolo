@@ -17,8 +17,12 @@ class RoloCardList extends BaseComponent {
       .rolo-card-list {
         padding: 0.8rem 1.6rem;
       }
-      .rolo-card-list rolo-flip-card::part(body) {
+      .rolo-card-list rolo-flip-card {
+        display: inline-block;
         width: 300px;
+        /* @TODO - remove margin once grid layout implemented. 
+              Then adjust item  spacing with grid gap */
+        margin-right: 0.8rem;
       }
     `;
   }
