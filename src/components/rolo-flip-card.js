@@ -2,7 +2,7 @@ import './base/base-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
 
-import BaseComponent from './base-component';
+import BaseComponent from './base/base-component';
 
 @customElement('rolo-flip-card')
 class RoloCard extends BaseComponent {
@@ -28,7 +28,6 @@ class RoloCard extends BaseComponent {
   render() {
     const { flipped, front, back, editable } = this.card;
     return html`
-      <div part="body">
         <base-flip-card is-flipped="${flipped}">
             <section
               slot="front"
@@ -42,7 +41,6 @@ class RoloCard extends BaseComponent {
               data-value="${back}"
               @input=${this.onCardInput('back')}
             >${back}</section>
-        </div>
       </base-flip-card>`;
   }
 }
