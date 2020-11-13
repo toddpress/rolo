@@ -2,7 +2,7 @@ import './rolo-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
 
-import BaseComponent from './base-component';
+import BaseComponent from './base/base-component';
 import { repeat } from 'lit-html/directives/repeat';
 
 @customElement('rolo-card-list')
