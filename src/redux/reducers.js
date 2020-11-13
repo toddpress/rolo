@@ -32,7 +32,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
             return {
               ...state,
               cards: [
-                ...state.cards,
                 {
                   id: nanoid(),
                   flipped: false,
@@ -40,6 +39,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
                   front: '',
                   back: '',
                 },
+                ...state.cards,
               ],
             };
         case UPDATE_CARD:
