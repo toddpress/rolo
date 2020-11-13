@@ -2,7 +2,7 @@ import './base/base-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
 
-import BaseComponent from './base-component';
+import BaseComponent from './base/base-component';
 
 @customElement('rolo-flip-card')
 class RoloCard extends BaseComponent {
