@@ -23,6 +23,7 @@ class RoloCardList extends BaseComponent {
         /* @TODO - remove margin once grid layout implemented. 
               Then adjust item  spacing with grid gap */
         margin-right: 0.8rem;
+        margin-bottom: 0.4rem;
       }
     `;
   }
