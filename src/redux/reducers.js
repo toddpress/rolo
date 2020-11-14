@@ -1,7 +1,8 @@
 import {
     ADD_CARD,
     UPDATE_CARD,
-    UPDATE_FILTER
+    UPDATE_FILTER,
+    REMOVE_CARD
 } from './actions';
 
 import { createSelector } from 'reselect';
@@ -14,8 +15,8 @@ export const VisibilityFilters = {
 };
 
 const INITIAL_STATE = {
-  cards: [{ id: nanoid() , flipped: false, editable: true, front: '', back: '' }],
-  filter: VisibilityFilters.SHOW_ALL,
+  cards: [{ id: nanoid() , title: 'My First Card', flipped: false, editable: true, front: '', back: '' }],
+  filter: VisibilityFilters.SHOW_ALL
 };
 
 const getCardsSelector = state => state.cards;
@@ -28,12 +29,14 @@ export const getVisibleCardsSelector = createSelector(
 
 export const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case ADD_CARD:
+        case ADD_CARD: {
+            const { title } = action.payload; 
             return {
               ...state,
               cards: [
                 {
                   id: nanoid(),
+                  title,
                   flipped: false,
                   editable: true,
                   front: '',
@@ -42,7 +45,8 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 ...state.cards,
               ],
             };
-        case UPDATE_CARD:
+        }
+        case UPDATE_CARD: {
             const { card } = action.payload;
             const index = state.cards.findIndex(c => c.id === card.id)
             const cards = [
@@ -55,11 +59,22 @@ export const reducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cards
             }
-        case UPDATE_FILTER:
+        }
+        case REMOVE_CARD: {
+            return {
+                ...state,
+                cards: [
+                    ...state.cards.slice(0, state.cards.findIndex(c => c.id === action.payload.id)), 
+                    ...state.cards.slice(state.cards.findIndex(c => c.id === action.payload.id) + 1)
+                ]
+            }
+        }
+        case UPDATE_FILTER: {
             return {
                 ...state,
                 filter: action.filter
             }
+        }
         default:
             return state;
     }

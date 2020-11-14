@@ -1,11 +1,14 @@
 import './base/base-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
+import { connect } from 'pwa-helpers';
+import { store } from '../redux/store.js';
+import { updateCard, removeCard } from '../redux/actions.js'; 
 
 import BaseComponent from './base/base-component';
 
 @customElement('rolo-flip-card')
-class RoloCard extends BaseComponent {
+class RoloCard extends connect(store)(BaseComponent) {
   
   @property({ type: Object }) card = {};
 
@@ -17,6 +20,21 @@ class RoloCard extends BaseComponent {
         box-sizing: border-box;
         overflow: auto;
       }
+      section[readonly] {
+        background-color: hsl(200, 90%, 52%);
+        display: flex;
+        justify-content: space-between;
+      }
+      .title {
+        margin: 0.5em;
+        color: #fff;
+        font-weight: bold;
+        border: solid 3.5px #fff;
+        padding: 0.25em;
+      }
+      vaadin-button[theme='primary'] {
+        margin: 0.5em;
+      }
     `;
   }
   onCardInput = (side) => (event) => {
@@ -27,8 +45,14 @@ class RoloCard extends BaseComponent {
     this._dispatchEvent('card-update', card);
   }
   render() {
-    const { flipped, front, back, editable } = this.card;
+    const { title, flipped, front, back, editable } = this.card;
     return html`
+        <base-flip-card-title title="${title}">
+          <section slot="title" readonly>
+              <div @click="${this.updateCard}" class="title">${title}</div>
+              <vaadin-button theme="primary" @click="${this.removeCard}">Remove</vaadin-button>
+          </section>
+        </base-flip-card-title>
         <base-flip-card is-flipped="${flipped}">
             <section
               slot="front"
@@ -43,6 +67,14 @@ class RoloCard extends BaseComponent {
               @input=${this.onCardInput('back')}
             >${back}</section>
       </base-flip-card>`;
+  }
+
+  updateCard = () => {
+    store.dispatch(updateCard({...this.card, flipped: !this.card.flipped}));
+  }
+
+  removeCard = () => {
+    store.dispatch(removeCard({...this.card}))
   }
 }
 
