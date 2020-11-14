@@ -17,9 +17,7 @@ class RoloCardList extends BaseComponent {
       .rolo-card-list {
         padding: 0.8rem 1.6rem;
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
-        align-items: flex-start;
       }
       .rolo-card-list rolo-flip-card {
         display: inline-block;
