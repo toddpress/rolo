@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 export const ADD_CARD = 'ADD_CARD';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const UPDATE_CARD = 'UPDATE_CARD';
+export const REMOVE_CARD = 'REMOVE_CARD';
 
 
 export const updateCard = (card) => {
@@ -17,9 +18,19 @@ export const updateCard = (card) => {
 export const addCard = card => {
     return {
         type: ADD_CARD,
-        todo: {
+        payload: {
             id: nanoid(),
-            card
+            ...card
+        }
+    }
+}
+
+export const removeCard = card => {
+    return {
+        type: REMOVE_CARD,
+        payload: {
+            id: nanoid(),
+            ...card
         }
     }
 }
