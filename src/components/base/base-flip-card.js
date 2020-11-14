@@ -59,12 +59,11 @@ class BaseFlipCard extends BaseComponent {
         class="base-flip-card ${this.isFlipped
           ? 'base-flip-card--flipped'
           : ''}"
-        part="card"
       >
-        <div class="base-flip-card__front" part="front">
+        <div class="base-flip-card__front">
           <slot name="front"></slot>
         </div>
-        <div class="base-flip-card__back" part="back">
+        <div class="base-flip-card__back">
           <slot name="back"></slot>
         </div>
       </div>
