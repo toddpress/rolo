@@ -14,18 +14,26 @@ class RoloCard extends connect(store)(BaseComponent) {
 
   static get styles() {
     return css`
-      section[contenteditable] {
-        height: 100%;
+      #title {
+        border-bottom: solid 1px #ccc;
+      }
+      input,textarea {
         padding: 0.4rem 0.8rem;
         box-sizing: border-box;
         overflow: auto;
+        outline: none;
+        -webkit-appearance: none;
+        border: none;
+      }
+      input {
+        border-bottom: solid 1px #ccc;
       }
       section[readonly] {
         background-color: hsl(200, 90%, 52%);
         display: flex;
         justify-content: space-between;
       }
-      .title {
+      .flip {
         margin: 0.5em;
         color: #fff;
         font-weight: bold;
@@ -35,37 +43,60 @@ class RoloCard extends connect(store)(BaseComponent) {
       vaadin-button[theme='primary'] {
         margin: 0.5em;
       }
+
+      div[slot='front'] {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      textarea {
+        flex: 1;
+        resize: none;
+      }
+
+      textarea[slot='back'] {
+        width: 100%;
+        height: 100%;
+      }
     `;
   }
   onCardInput = (side) => (event) => {
+    console.log('Values', event.target.value);
     const card = {
       ...this.card,
-      [side]: event.target.dataset.value
+      [side]: event.target.value
     };
     this._dispatchEvent('card-update', card);
   }
+
+  onTitleInput = (event) => {
+    const card = {
+      ...this.card,
+      title: event.target.value
+    };
+    this._dispatchEvent('card-update', card);
+  }
+
   render() {
     const { title, flipped, front, back, editable } = this.card;
     return html`
-        <base-flip-card-title title="${title}">
-          <section slot="title" readonly>
-              <div @click="${this.updateCard}" class="title">${title}</div>
+        <base-flip-card-title>
+          <section slot="top" readonly>
+              <div @click="${this.updateCard}" class="flip">Flip Card</div>
               <vaadin-button theme="primary" @click="${this.removeCard}">Remove</vaadin-button>
           </section>
         </base-flip-card-title>
         <base-flip-card is-flipped="${flipped}">
-            <section
-              slot="front"
-              ?contenteditable=${editable}
-              data-value="${front}"
-              @input="${this.onCardInput('front')}"
-            >${front}</section>
-            <section
+          <div slot="front">
+            <input type="text" value="${title}" @input="${this.onTitleInput}">
+            <textarea value="${front}" @input="${this.onCardInput('front')}"></textarea>
+          </div>
+            <textarea
               slot="back"
-              ?contenteditable=${editable}
-              data-value="${back}"
+              value="${back}"
               @input=${this.onCardInput('back')}
-            >${back}</section>
+            >${back}</textarea>
       </base-flip-card>`;
   }
 
