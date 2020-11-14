@@ -28,9 +28,6 @@ class RoloView extends connect(store)(LitElement) {
   }
   static get styles() {
     return css`
-      .rolo-view__card-list rolo-flip-card::part(card) {
-        width: 300px;
-      }
     `;
   }
 
@@ -66,7 +63,7 @@ class RoloView extends connect(store)(LitElement) {
   }
   
   addCard = () => {
-    store.dispatch(addCard({ title: this.title, flipped: false, editable: true, front: '', back: '' }));
-    this.title='';
-  }
+    store.dispatch(addCard(this.title));
+    this.title = '';
+  };
 }

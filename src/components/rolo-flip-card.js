@@ -5,7 +5,7 @@ import { connect } from 'pwa-helpers';
 import { store } from '../redux/store.js';
 import { updateCard, removeCard } from '../redux/actions.js'; 
 
-import BaseComponent from './base-component';
+import BaseComponent from './base/base-component';
 
 @customElement('rolo-flip-card')
 class RoloCard extends connect(store)(BaseComponent) {
@@ -18,6 +18,7 @@ class RoloCard extends connect(store)(BaseComponent) {
         height: 100%;
         padding: 0.4rem 0.8rem;
         box-sizing: border-box;
+        overflow: auto;
       }
       section[readonly] {
         background-color: hsl(200, 90%, 52%);
@@ -37,14 +38,15 @@ class RoloCard extends connect(store)(BaseComponent) {
     `;
   }
   onCardInput = (side) => (event) => {
-    //@TODO - fix the duplication issue when inputting text the first time
-    const card = { ...this.card, [side]: event.target.dataset.value };
+    const card = {
+      ...this.card,
+      [side]: event.target.dataset.value
+    };
     this._dispatchEvent('card-update', card);
   }
   render() {
     const { title, flipped, front, back, editable } = this.card;
     return html`
-      <div part="body">
         <base-flip-card-title title="${title}">
           <section slot="title" readonly>
               <div @click="${this.updateCard}" class="title">${title}</div>
@@ -64,7 +66,6 @@ class RoloCard extends connect(store)(BaseComponent) {
               data-value="${back}"
               @input=${this.onCardInput('back')}
             >${back}</section>
-        </div>
       </base-flip-card>`;
   }
 

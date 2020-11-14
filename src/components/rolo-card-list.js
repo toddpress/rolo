@@ -2,7 +2,7 @@ import './rolo-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
 
-import BaseComponent from './base-component';
+import BaseComponent from './base/base-component';
 import { repeat } from 'lit-html/directives/repeat';
 
 @customElement('rolo-card-list')
@@ -21,8 +21,13 @@ class RoloCardList extends BaseComponent {
         flex-wrap: wrap;
         align-items: flex-start;
       }
-      .rolo-card-list rolo-flip-card::part(body) {
+      .rolo-card-list rolo-flip-card {
+        display: inline-block;
         width: 300px;
+        /* @TODO - remove margin once grid layout implemented. 
+              Then adjust item  spacing with grid gap */
+        margin-right: 0.8rem;
+        margin-bottom: 0.4rem;
       }
       rolo-flip-card {
         margin-bottom: 2em;
