@@ -15,6 +15,7 @@ class RoloCard extends BaseComponent {
         height: 100%;
         padding: 0.4rem 0.8rem;
         box-sizing: border-box;
+        overflow: auto;
       }
     `;
   }
