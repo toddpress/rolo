@@ -30,6 +30,7 @@ class BaseFlipCard extends BaseComponent {
         padding-top: calc(
           100% / (5 / 3)
         ); /* padding hack to achieve 3x5 note card aspect ratio*/
+        pointer-events: none;
       }
 
       .base-flip-card--flipped {

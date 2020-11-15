@@ -15,21 +15,14 @@ class RoloCardList extends BaseComponent {
   static get styles() {
     return css`
       .rolo-card-list {
-        padding: 0.8rem 1.6rem;
+        padding: var(--space-md);
         display: flex;
         flex-wrap: wrap;
       }
-      .rolo-card-list rolo-flip-card {
-        display: inline-block;
-        width: 300px;
-        /* @TODO - remove margin once grid layout implemented. 
-              Then adjust item  spacing with grid gap */
-        margin-right: 0.8rem;
-        margin-bottom: 0.4rem;
-      }
-      rolo-flip-card {
-        margin-bottom: 2em;
-      }
+      
+
+      
+
     `;
   }
 
