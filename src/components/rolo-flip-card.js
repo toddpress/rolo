@@ -1,11 +1,11 @@
 import './base/base-flip-card';
 
 import { css, customElement, html, property } from 'lit-element';
-import { connect } from 'pwa-helpers';
-import { store } from '../redux/store.js';
-import { updateCard, removeCard } from '../redux/actions.js'; 
+import { removeCard, updateCard } from '../redux/actions.js';
 
 import BaseComponent from './base/base-component';
+import { connect } from 'pwa-helpers';
+import { store } from '../redux/store.js';
 
 @customElement('rolo-flip-card')
 class RoloCard extends connect(store)(BaseComponent) {
@@ -14,55 +14,84 @@ class RoloCard extends connect(store)(BaseComponent) {
 
   static get styles() {
     return css`
-      #title {
-        border-bottom: solid 1px #ccc;
-      }
-      input,textarea {
-        padding: 0.4rem 0.8rem;
-        box-sizing: border-box;
-        overflow: auto;
-        outline: none;
-        -webkit-appearance: none;
-        border: none;
-      }
-      input {
-        border-bottom: solid 1px #ccc;
-      }
-      section[readonly] {
-        background-color: hsl(200, 90%, 52%);
-        display: flex;
-        justify-content: space-between;
-      }
-      .flip {
-        margin: 0.5em;
-        color: #fff;
-        font-weight: bold;
-        border: solid 3.5px #fff;
-        padding: 0.25em;
-      }
-      vaadin-button[theme='primary'] {
-        margin: 0.5em;
+      :host {
+        display: inline-block;
+        min-width: 300px;
+        flex-basis: 40%;
+        margin: 0 var(--space-md-fixed) var(--space-md-fixed) 0;
+        /* @TODO - remove margin once grid layout implemented. 
+              Then adjust item  spacing with grid gap */
+        animation: 250ms fadeZoomIn 1 ease-in-out;
       }
 
-      div[slot='front'] {
+      input,
+      textarea,
+      button {
+        overflow: auto;
+        appearance: none;
+        -webkit-appearance: none;
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+      }
+
+      input,
+      textarea {
+        padding: 0 var(--space-xxs);
+        box-sizing: border-box;
+        cursor: text;
+      }
+
+      .flip-button {
+        color: #fff;
+        font-weight: bold;
+        border: 2px solid #fff;
+        border-radius: 5px;
+        padding: var(--space-xxxs) var(--space-sm);
+        margin: 4px 0px;
+      }
+
+      base-flip-card div[slot] {
         display: flex;
         flex-direction: column;
         height: 100%;
       }
 
-      textarea {
+      base-flip-card div[slot] textarea {
         flex: 1;
         resize: none;
       }
 
-      textarea[slot='back'] {
-        width: 100%;
-        height: 100%;
+      base-flip-card div[slot='front'] input {
+        border-bottom: 1px solid var(--shade-20pct);
+      }
+
+      base-flip-card-title div[slot='top'] {
+        background-color: var(--menu-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-xxs) var(--space-sm);
+      }
+
+      @keyframes fadeZoomIn {
+        from {
+          transform: scale(0.75);
+          opacity: 0;
+        }
+
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
     `;
   }
   onCardInput = (side) => (event) => {
-    console.log('Values', event.target.value);
     const card = {
       ...this.card,
       [side]: event.target.value
@@ -81,22 +110,35 @@ class RoloCard extends connect(store)(BaseComponent) {
   render() {
     const { title, flipped, front, back, editable } = this.card;
     return html`
-        <base-flip-card-title>
-          <section slot="top" readonly>
-              <div @click="${this.updateCard}" class="flip">Flip Card</div>
-              <vaadin-button theme="primary" @click="${this.removeCard}">Remove</vaadin-button>
-          </section>
-        </base-flip-card-title>
-        <base-flip-card is-flipped="${flipped}">
-          <div slot="front">
-            <input type="text" value="${title}" @input="${this.onTitleInput}">
-            <textarea value="${front}" @input="${this.onCardInput('front')}"></textarea>
-          </div>
-            <textarea
-              slot="back"
-              value="${back}"
-              @input=${this.onCardInput('back')}
-            >${back}</textarea>
+      <base-flip-card-title>
+        <div slot="top">
+          <button 
+            @click="${this.updateCard}" 
+            class="flip-button"
+          >Flip Card</button>
+          <vaadin-button
+            theme="primary"
+            class="remove-button"
+            @click="${this.removeCard}"
+            >Remove</vaadin-button
+          >
+        </div>
+      </base-flip-card-title>
+      <base-flip-card is-flipped="${flipped}">
+        <div slot="front">
+          <input value="${title}" @input="${this.onTitleInput}" />
+          <textarea
+            value="${front}"
+            @input="${this.onCardInput('front')}"
+          ></textarea>
+        </div>
+        <div slot="back">
+          <textarea
+            slot="back"
+            value="${back}"
+            @input=${this.onCardInput('back')}
+          ></textarea>
+        </div>
       </base-flip-card>`;
   }
 

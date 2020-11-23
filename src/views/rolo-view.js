@@ -28,13 +28,21 @@ class RoloView extends connect(store)(LitElement) {
   }
   static get styles() {
     return css`
+      .rolo-view__add-card-form {
+        padding: 0 var(--space-md);
+        display: flex;
+        align-items: flex-end;
+      }
+      .rolo-view__add-card-form vaadin-button {
+        margin-right: var(--space-xxxs);
+      }
     `;
   }
 
   render() {
     return html`
       <div>
-        <div>
+        <div class="rolo-view__add-card-form">
           <vaadin-button theme="primary" @click="${this.addCard}" 
             ?disabled="${!this.title}">Add Card +</vaadin-button>
           <vaadin-text-field 
